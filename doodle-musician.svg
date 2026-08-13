@@ -1,0 +1,112 @@
+<svg width="300" height="350" viewBox="0 0 300 350"
+xmlns="http://www.w3.org/2000/svg">
+
+<style>
+
+.line {
+    fill:none;
+    stroke:#111;
+    stroke-width:5;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+    stroke-dasharray:500;
+    stroke-dashoffset:500;
+    animation: draw 1.2s ease forwards;
+}
+
+.guitar {
+    animation-delay:0.6s;
+}
+
+.string {
+    animation:pluck .4s ease 1.4s infinite;
+    transform-origin:center;
+}
+
+@keyframes draw{
+    to{
+        stroke-dashoffset:0;
+    }
+}
+
+@keyframes pluck{
+    0%,100%{
+        transform:rotate(0deg);
+    }
+
+    50%{
+        transform:rotate(8deg);
+    }
+}
+
+</style>
+
+
+<!-- Head -->
+<circle class="line"
+cx="150"
+cy="65"
+r="35"/>
+
+
+<!-- Hair -->
+<path class="line"
+d="M120 55 Q150 25 180 55"/>
+
+
+<!-- Body -->
+<path class="line"
+d="M150 100 L150 190"/>
+
+
+<!-- Left arm -->
+<path class="line"
+d="M150 120 Q110 150 135 175"/>
+
+
+<!-- Right arm -->
+<path class="line"
+d="M150 125 Q190 145 170 165"/>
+
+
+<!-- Legs -->
+<path class="line"
+d="M150 190 L120 260"/>
+
+<path class="line"
+d="M150 190 L185 260"/>
+
+
+<!-- Guitar body -->
+<ellipse class="line guitar"
+cx="190"
+cy="170"
+rx="55"
+ry="35"/>
+
+
+<!-- Guitar neck -->
+<path class="line guitar"
+d="M150 165 L70 120"/>
+
+
+<!-- Guitar strings -->
+<path class="line string"
+d="M175 155 Q205 170 175 185"/>
+
+
+<!-- Music notes -->
+<text x="225" y="80"
+font-size="45"
+fill="#111">
+♪ 
+</text>
+
+<text x="245" y="120"
+font-size="35"
+fill="#111">
+♫
+</text>
+
+
+</svg>

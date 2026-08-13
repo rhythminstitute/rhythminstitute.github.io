@@ -1,0 +1,3345 @@
+/* ===== GLOBAL ===== */
+
+stroke-dasharray
+stroke-dashoffset
+transform:translateX(100px)
+
+#website{
+
+opacity:0;
+
+animation:
+
+homeReveal 1.2s forwards 3.8s;
+
+}
+
+
+
+@keyframes homeReveal{
+
+to{
+
+opacity:1;
+
+}
+
+}
+
+
+#intro-animation{
+
+position:fixed;
+inset:0;
+background:black;
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:9999;
+
+}
+
+
+#music-scene{
+
+width:100%;
+height:100%;
+
+}
+
+
+/* everything looks hand drawn */
+
+#music-scene path,
+#music-scene circle,
+#music-scene ellipse{
+
+fill:none;
+
+stroke:#111;
+
+stroke-width:6;
+
+stroke-linecap:round;
+
+stroke-linejoin:round;
+
+}
+
+
+/* first line */
+
+#magic-line{
+
+stroke-dasharray:800;
+stroke-dashoffset:800;
+
+animation:
+drawLine 1.2s forwards;
+
+}
+
+
+/* person */
+#person path,
+#person circle,
+#guitar path,
+#guitar ellipse {
+
+stroke:url(#goldGradient);
+stroke-width:4;
+filter:url(#glow);
+
+opacity:1;
+}
+
+
+#person circle {
+fill:#111;
+}
+
+
+#guitar ellipse {
+fill:url(#wood);
+}
+
+
+#guitar path {
+fill:none;
+}
+/* notes */
+
+#notes{
+
+opacity:0;
+
+animation:
+
+releaseNotes 1s forwards 2.7s;
+
+}
+
+
+
+#strings{
+
+animation:
+
+pluck .3s infinite 2.5s;
+
+transform-origin:center;
+
+}
+
+
+
+@keyframes drawLine{
+
+to{
+
+stroke-dashoffset:0;
+
+}
+
+}
+
+
+
+@keyframes appearPerson{
+
+to{
+
+opacity:1;
+
+}
+
+}
+
+
+@keyframes showGuitar{
+
+to{
+
+opacity:1;
+
+}
+
+}
+
+
+@keyframes pluck{
+
+50%{
+
+transform:rotate(10deg);
+
+}
+
+}
+
+
+@keyframes releaseNotes{
+
+
+0%{
+
+opacity:0;
+
+transform:translateX(0);
+
+}
+
+
+100%{
+
+opacity:1;
+
+transform:translateX(350px);
+
+}
+
+
+}
+
+#music-scene{
+
+animation:
+
+cameraMove 4.5s forwards;
+
+}
+
+
+@keyframes cameraMove{
+
+
+0%{
+
+transform:translateX(0);
+
+}
+
+
+70%{
+
+transform:translateX(-250px);
+
+}
+
+
+100%{
+
+transform:translateX(-600px);
+
+}
+
+
+}
+
+:root{
+
+--bg:#0F172A;
+--bg2:#111827;
+--surface:#1E293B;
+--glass:rgba(255,255,255,.08);
+
+--primary:#7C3AED;
+--secondary:#EC4899;
+--accent:#38BDF8;
+--gold:#FBBF24;
+
+--text:#FFFFFF;
+--text2:#CBD5E1;
+
+--shadow:0 20px 45px rgba(124,58,237,.25);
+
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* Cinematic addition: ensures smoother scrolling on trackpads */
+  scrollbar-width: thin;
+  scrollbar-color: #ff4d4d #0b0b0b;
+}
+
+body {
+  background:#0F172A;
+  background-image:
+radial-gradient(circle at top left,
+rgba(124,58,237,.15),
+transparent 35%),
+
+radial-gradient(circle at bottom right,
+rgba(56,189,248,.15),
+transparent 35%);
+  color: white;
+  overflow-x: hidden;
+  /* cinematic addition: prevents text jaggedness during movement */
+  -webkit-font-smoothing: antialiased;
+}
+
+body.no-scroll {
+  overflow: hidden;
+}
+
+/* ===== CINEMATIC REVEAL ANIMATIONS ===== */
+
+/* Apply this class to any section or div you want to "fade up" as you scroll */
+.reveal {
+  position: relative;
+  opacity: 0;
+  transform: translateY(60px) scale(0.98); /* Starts slightly lower and smaller */
+  transition: all 1.2s cubic-bezier(0.22, 1, 0.36, 1); /* Professional "Slow-Stop" curve */
+  visibility: hidden;
+}
+
+/* When the scroll reaches the element, JS adds this class */
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  visibility: visible;
+}
+
+/* For elements you want to slide in from the LEFT (like titles) */
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-50px);
+  transition: all 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal-left.active {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Optional: Subtle zoom effect for background images on scroll */
+.cinematic-zoom {
+    transition: transform 10s ease-out; /* Super slow zoom */
+}
+.cinematic-zoom:hover {
+    transform: scale(1.05);
+}
+
+/* ===== NAVBAR OVERLAY ===== *//* Landmark: NAVBAR SECTION */
+
+/* ============================================================
+   1. SUB-PAGE NAVBAR (Vision, Faculty, etc.) 
+   Simple layout for pages like vision.html
+   ============================================================ */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 5%;
+    background-color: #004d40 !important; /* Solid MGM Green */
+    position: absolute; /* Locked at top as requested */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+/* ============================================================
+   1. GLOBAL & SUB-PAGE NAVBAR (Vision, Faculty, etc.) 
+   ============================================================ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 5%;
+    background-color: #004d40 !important; /* Solid MGM Green */
+    position: absolute; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+#home-navbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 30px 0;
+    z-index: 2000;
+    background:
+linear-gradient(
+180deg,
+rgba(15,23,42,.95),
+rgba(15,23,42,.45),
+transparent
+)!important;backdrop-filter:blur(15px);
+}
+
+#home-navbar .nav-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 1400px;
+    margin: 0 auto;
+    gap: 40px;
+}
+
+#home-navbar .nav-side {
+    display: flex;
+    gap: 30px;
+    flex: 1;
+}
+
+#home-navbar .nav-left { justify-content: flex-end; }
+#home-navbar .nav-right { justify-content: flex-start; }
+
+#home-navbar .nav-side a {
+    text-decoration: none;
+    color: white !important;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    font-weight: 400;
+    transition: color 0.3s;
+}
+
+/* MODIFIED: Added !important to ensure the color actually changes on hover */
+#home-navbar .nav-side a:hover {
+    color:var(--secondary)!important;
+}
+
+/* The Elegant Center Logo - Specific to Home */
+#home-navbar .logo-center {
+    font-family: 'Playfair Display', serif;
+    text-align: center;
+    color: #fff;
+    font-size: 1.8rem;
+    line-height: 1;
+    white-space: nowrap;
+    flex: 0 0 auto; /* Keeps it from stretching */
+}
+
+#home-navbar .logo-center span {
+    display: block;
+    font-size: 1.0rem;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    color:var(--gold);
+    margin-top: 5px;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Fix for Mobile: Stacks them - Only for Home */
+@media (max-width: 1000px) {
+    #home-navbar .nav-container {
+        flex-direction: column;
+        gap: 15px;
+    }
+    #home-navbar .nav-left, 
+    #home-navbar .nav-right { 
+        justify-content: center; 
+    }
+    #home-navbar .logo-center { 
+        font-size: 1.4rem; 
+        order: -1; 
+    }
+}
+
+/* 2. Make the Hero container exactly the size of the screen */
+.hero {
+  position: relative;
+  width: 100%;
+  height: 110vh; /* 100% of the Viewport Height */
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 3. Force the video to act like a background cover */
+.hero-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Adjust the 1.1 or 1.2 until the borders disappear */
+  transform: translate(-50%, -50%) scale(1.5); 
+  z-index: -1;
+}
+
+/* 4. Ensure the overlay also covers everything */
+.hero-overlay{
+    position:absolute;
+    inset:0;
+
+    background:
+
+    radial-gradient(
+        circle at top left,
+        rgba(124,58,237,.45),
+        transparent 35%
+    ),
+
+    radial-gradient(
+        circle at bottom right,
+        rgba(56,189,248,.30),
+        transparent 35%
+    ),
+
+    linear-gradient(
+        rgba(8,8,15,.55),
+        rgba(8,8,15,.75)
+    );
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+
+    width: min(900px, 90%);
+    margin: 0 auto;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    animation: heroFade 1.2s ease;
+}
+
+.hero-content::before{
+    content:"";
+
+    position:absolute;
+
+    width:550px;
+    height:550px;
+
+    background:radial-gradient(
+        circle,
+        rgba(124,58,237,.28),
+        transparent 70%
+    );
+
+    filter:blur(70px);
+
+    z-index:-1;
+
+    animation: pulseGlow 6s ease-in-out infinite;
+}
+
+.hero-content h1{
+
+    font-size:clamp(3.5rem,8vw,6rem);
+
+    line-height:1.05;
+
+    font-weight:800;
+
+    letter-spacing:-2px;
+
+    color:white;
+
+    margin-bottom:18px;
+
+    text-shadow:
+        0 5px 25px rgba(0,0,0,.45);
+}
+
+.hero-content h1::after{
+
+    content:"";
+
+    display:block;
+
+    width:130px;
+
+    height:6px;
+
+    margin:28px auto;
+
+    border-radius:100px;
+
+    background:linear-gradient(
+        90deg,
+        #38BDF8,
+        #7C3AED,
+        #EC4899
+    );
+}
+
+@keyframes pulseGlow{
+
+0%,100%{
+
+transform:scale(1);
+
+opacity:.7;
+
+}
+
+50%{
+
+transform:scale(1.08);
+
+opacity:1;
+
+}
+
+}
+
+@keyframes heroFade{
+
+from{
+
+opacity:0;
+
+transform:translateY(40px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:none;
+
+}
+
+}
+
+/* ===== BUTTONS ===== */
+.enroll-btn {
+  margin-top: 20px;
+  padding: 14px 35px;
+  border-radius: 30px;
+  border: none;
+  background: linear-gradient(135deg, #ff824d, #f71515);
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.enroll-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(255, 77, 77, 0.5);
+}
+
+/* ===== SECTIONS ===== */
+.section {
+  padding: 70px 20px;
+  background:transparent;
+  text-align: center;
+}
+
+.section h2 {
+  font-size: 2.5rem;
+  margin-bottom: 40px;
+}
+
+/* ===== COURSE CARDS & MODAL LOGIC ===== */
+.modal-overlay {
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,0.35);
+
+    opacity:0;
+
+    visibility:hidden;
+
+    transition:.4s ease;
+
+    z-index:5000;
+
+}
+
+.modal-overlay.active {
+
+  opacity:1;
+
+  visibility:visible;
+
+}
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+  justify-content: center;
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* ===== THE COMPACT CARD SYSTEM ===== */
+
+/* 1. Base Card Style & Hover */
+/* ===== THE UNIFIED CARD SYSTEM ===== */
+
+/* 1. Base Card - The "Outside" look */
+.card {
+  background: #161616;
+  width: 280px;
+  padding: 0; /* padding is 0 to allow the image to reach edges */
+  border-radius: 20px;
+  border: 1px solid #333;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, opacity 0.4s ease;
+  cursor: pointer;
+  position: relative;
+}
+
+/* 2. The Top Image - Black & White by default */
+.card-img {
+  width: 100%;
+  height: 180px;
+  background-size: cover;
+  background-position: center;
+  filter: grayscale(100%); /* B&W effect */
+  transition: filter 0.5s ease;
+}
+
+/* 3. The Text Section underneath the image */
+.card-content {
+  padding: 20px;
+  text-align: center;
+}
+
+/* 4. HOVER ANIMATION: Lift + Color */
+.card:hover:not(.expanded) {
+  transform: translateY(-10px) scale(1.03);
+  border-color:var(--secondary);
+
+box-shadow:
+
+0 25px 45px rgba(124,58,237,.35);
+}
+
+.card:hover .card-img {
+  filter: grayscale(0%); /* Turns to Color */
+}
+
+/* 5. FLY-TO-CENTER (Expanded) */
+.card.expanded {
+
+    position:fixed;
+
+
+    top:50%;
+    left:50%;
+
+
+    transform:
+    translate(-50%,-50%)
+    scale(1.15);
+
+
+    width:350px;
+
+
+    z-index:10000;
+
+
+    background:#161616;
+
+
+    border:1px solid var(--secondary);
+
+
+    box-shadow:
+    0 0 50px rgba(0,0,0,.8);
+
+
+}
+.card.expanded .card-img {
+
+    display:none;
+
+}
+/* Hide small banner when expanded to show full background */
+
+
+.card.dim {
+
+    opacity:0.15;
+
+    filter:none;
+
+}
+
+/* 6. EXPANDED TEXT STYLES (Bold + Shadows) */
+.card.expanded h3, 
+.card.expanded p, 
+.card.expanded li {
+  font-weight: 800 !important;
+  text-shadow: 2px 2px 10px rgba(0, 0, 0, 1);
+  color: #fff;
+}
+
+.card-details {
+  display: none;
+  margin-top: 20px;
+}
+
+.card.expanded .card-details {
+  display: block;
+}
+
+.card.expanded li {
+  list-style: none;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+/* Color the Music Note Red */
+.card.expanded li::first-letter {
+  color: #ff4d4d;
+  font-size: 1.3rem;
+  padding-right: 5px;
+}
+
+/* 7. IMAGE ASSIGNMENTS (Crucial: Maps images to both views) */
+/* Top Banner Assignments */
+.card.classical-singing .card-img{ background-image: url('vocals-bg.jpg'); }
+.card.guitar .card-img{ background-image: url('guitar-bg.jpg'); }
+.card.keyboard .card-img{ background-image: url('keyboard-bg.jpg'); }
+.card.drums .card-img{ background-image: url('drums-bg.jpg'); }
+.card.flute .card-img{ background-image: url('flute-bg.jpg'); }
+.card.tabla .card-img{ background-image: url('tabla-bg.jpg'); }
+.card.dance .card-img{ background-image: url('dance-bg.jpg'); }
+.card.classical-dance .card-img{ background-image: url('classical-bg.jpg'); }
+.card.theatre .card-img{ background-image: url('theatre-bg.jpg'); }
+.card.sound .card-img{ background-image: url('sound-bg.jpg'); }
+.card.production .card-img{ background-image: url('production-bg.jpg'); }
+/* Note the SPACE before .card-img */
+.card.the-karaoke-club .card-img{ 
+  background-image: url('live-bg.jpg'); 
+}
+
+.card-actions {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 25px;
+}
+
+/* Enroll Now Button */
+.enroll-btn-small {
+  background: #ff4d4d;
+  color: white !important; /* Forces color to stay white */
+  padding: 10px 22px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 900;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  border: 2px solid #ff4d4d;
+  text-transform: uppercase;
+}
+
+.enroll-btn-small:hover {
+  background: transparent;
+  color: #ff4d4d !important;
+  box-shadow: 0 0 20px rgba(255, 77, 77, 0.6);
+}
+
+/* Ensure Close button matches height */
+.close-btn {
+  padding: 10px 22px;
+  border-radius: 30px;
+  font-weight: 800;
+}
+
+/* 6. Pointer List Styling */
+.card-details ul {
+  list-style: none;
+  padding: 0;
+}
+
+.card-details li {
+  margin-bottom: 8px;
+}
+
+.learn-btn, .close-btn {
+  margin-top: 15px;
+  padding: 8px 20px;
+  border-radius: 20px;
+  border: none;
+  background: #ff4d4d;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.close-btn { background: #444; margin-left: 10px; }
+
+/* Centering the Header Part */
+.about-header {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 50px auto;
+}
+
+.about-header .section-title {
+  color: #ff4d4d;
+  font-size: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 15px;
+}
+
+.about-header .about-intro {
+  font-size: 1.1rem;
+  color: #bbb;
+  line-height: 1.6;
+}
+
+/* --- CHANGE 1: Use Flex and Align Items Stretch --- */
+.about-container {
+  display: flex;             /* Changed from grid to flex */
+  gap: 60px;
+  align-items: stretch;      /* This forces both sides to be equal height */
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.about-text {
+  flex: 1;                   /* Ensures left side takes 50% */
+}
+
+/* --- CHANGE 2: Remove fixed height and use flex --- */
+.about-image-area {
+  flex: 1;                   /* Ensures right side takes 50% */
+  display: flex;             /* Allows the image to fill the container */
+  position: relative;
+}
+
+/* --- ADD THIS: Styling the single image --- */
+.single-collage-img {
+  width: 100%;
+  height: 100%;              /* Takes full height of the text area */
+  object-fit: cover;         /* Keeps image looking good while filling space */
+  border-radius: 15px;
+  border: 2px solid #333;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+/* List Styling */
+.inauguration-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.inauguration-list li {
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 20px;
+  line-height: 1.4;
+  font-size: 1.05rem;
+}
+
+.inauguration-list li::before {
+  content: '♩';
+  position: absolute;
+  left: 0;
+  top: 15px;
+  color: #ff4d4d;
+  font-size: 1.2rem;
+}
+
+.inauguration-list li span {
+  color: #ff4d4d;
+  font-weight: 600;
+  font-size: 0.85rem;
+  display: block;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+/* ============================================================
+   COMPLETE UPDATED GALLERY SECTION
+   ============================================================ */
+
+.gallery-section {
+  padding: 100px 2%;
+  background:
+
+linear-gradient(
+
+180deg,
+
+#101827,
+
+#0F172A
+
+);
+}
+
+.gallery-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.gallery-header .section-title {
+  color: #ff4d4d;
+  font-size: 2.5rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.gallery-header p {
+  color: #888;
+  margin-top: 10px;
+}
+
+/* The Grid Container - Using Columns for Masonry (Pinterest) Look */
+.gallery-grid {
+  columns: 3; 
+  column-gap: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Individual Items - Hidden by default for JS Load More */
+.gallery-item {
+  display: none !important; 
+  break-inside: avoid;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 15px;
+  background: #111;
+}
+
+/* This class is added by JavaScript to show images */
+.gallery-item.visible {
+  display: block !important;
+  animation: fadeIn 0.6s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.gallery-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 0.6s ease;
+  cursor: pointer;
+}
+
+/* Hover Overlay */
+.gallery-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+  display: flex;
+  align-items: flex-end;
+  padding: 30px;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none; /* Allows click to pass through to image for lightbox */
+}
+
+.gallery-overlay span {
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  transform: translateY(10px);
+  transition: transform 0.4s ease;
+}
+
+.gallery-item:hover img {
+  transform: scale(1.05);
+}
+
+.gallery-item:hover .gallery-overlay {
+  opacity: 1;
+}
+
+.gallery-item:hover .gallery-overlay span {
+  transform: translateY(0);
+}
+
+/* Load More Button Container */
+.load-more-container {
+  text-align: center;
+  margin-top: 50px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+  .gallery-grid { columns: 2; }
+}
+@media (max-width: 600px) {
+  .gallery-grid { columns: 1; }
+}
+
+/* ============================================================
+   END OF GALLERY SECTION
+   ============================================================ */
+
+/* ===== ADMISSION FORM ===== */
+/* === ADMISSION SECTION WITH VIDEO === */
+
+.admission-section {
+  position: relative;
+  padding: 100px 20px;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-color: #000;
+}
+
+/* Video Styling */
+.video-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.bg-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.video-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7); /* Adjust darkness of the video here */
+}
+
+/* Form Wrapper */
+.admission-wrapper {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 550px;
+}
+
+.admission-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.admission-header .title-underline {
+  width: 120px;
+  height: 2px;
+  margin: 10px auto;
+  background: linear-gradient(90deg, transparent, #ff4d4d, transparent);
+  box-shadow: 0 0 10px rgba(255, 77, 77, 0.5);
+}
+
+.admission-header .subtitle {
+  color: #ff4d4d;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+/* Glassmorphism Form Style */
+.admission-form {
+  background: rgba(10, 26, 21, 0.85); /* Dark Green Faculty shade with transparency */
+  padding: 40px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px); /* Blurs the video behind the form */
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.admission-form input, 
+.admission-form select {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 18px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.4);
+  color: white;
+  font-size: 0.95rem;
+  transition: border-color 0.3s ease;
+}
+
+.admission-form input:focus, 
+.admission-form select:focus {
+  outline: none;
+  border-color: #ff4d4d;
+}
+
+.file-label {
+  text-align: left;
+  margin-bottom: 8px;
+  font-size: 0.85rem;
+  color: #ff4d4d;
+  font-weight: 600;
+}
+
+/* Submit Button */
+.enroll-btn {
+  width: 100%;
+  padding: 15px;
+  background: #ff4d4d;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.enroll-btn:hover {
+  background: #e63e3e;
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(255, 77, 77, 0.3);
+}
+
+.lightbox {
+  display: none; /* JS switches this to 'flex' */
+  position: fixed;
+  z-index: 2000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(10px);
+  
+  /* THE FIX: Vertical and Horizontal Centering */
+  flex-direction: column; 
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox-content {
+  /* Remove margin: auto; flex handles it now */
+  display: block;
+  max-width: 85%;
+  max-height: 80vh;
+  width: auto;  /* Allows section to adapt to image width */
+  height: auto; /* Allows section to adapt to image height */
+  border: 3px solid #fff;
+  border-radius: 10px;
+  animation: zoomIn 0.3s ease;
+  object-fit: contain; /* Ensures image isn't distorted */
+}
+
+@keyframes zoomIn {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* Navigation Buttons */
+.lightbox-close, .lightbox-prev, .lightbox-next {
+  position: absolute;
+  color: white;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+  user-select: none;
+  transition: 0.3s;
+}
+
+.lightbox-close { top: 20px; right: 35px; }
+.lightbox-prev { top: 50%; left: 30px; transform: translateY(-50%); }
+.lightbox-next { top: 50%; right: 30px; transform: translateY(-50%); }
+
+.lightbox-close:hover, .lightbox-prev:hover, .lightbox-next:hover {
+  color: #ff4d4d;
+}
+
+#lightboxCaption {
+  margin: 15px auto;
+  text-align: center;
+  color: #ccc;
+  font-size: 1.2rem;
+  width: 80%;
+}
+
+/* ===== ELEGANT HERO TYPOGRAPHY ===== */
+.hero-content {
+  text-align: center;
+  z-index: 5;
+}
+
+.hero-title {
+  font-family: 'Playfair Display', serif; /* Elegant Serif */
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -1px;
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+.hero-title span {
+    display: block;
+    font-size: 0.4em;
+    text-transform: uppercase;
+    letter-spacing: 8px;
+    font-weight: 300;
+    margin-top: 10px;
+    color: #ff4d4d;
+    
+    /* ADD THESE 3 LINES TO KILL THE LINE */
+    text-decoration: none !important;
+    border: none !important;
+    border-bottom: 0px solid transparent !important;
+    text-shadow:
+
+0 5px 30px rgba(0,0,0,.45);
+}
+
+.hero-subtitle {
+  font-size: 1.1rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 40px;
+  opacity: 0.9;
+}
+
+/* ===== SPLIT BUTTON DESIGN ===== */
+.hero-btn-container {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-btn {
+  padding: 15px 40px;
+  border-radius: 50px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  font-size: 0.9rem;
+  min-width: 200px;
+}
+
+/* The "Enroll" Button */
+.hero-btn.primary {
+  background:
+linear-gradient(
+135deg,
+var(--primary),
+var(--secondary)
+);
+
+border:none;
+
+box-shadow:
+0 15px 35px rgba(124,58,237,.35);
+}
+
+.hero-btn.primary:hover {
+  background:
+
+linear-gradient(
+
+135deg,
+
+#8B5CF6,
+
+#F472B6
+
+);
+
+transform:
+
+translateY(-5px)
+scale(1.03);
+
+box-shadow:
+
+0 25px 55px rgba(124,58,237,.45);
+}
+
+/* The "Explore" Button */
+.hero-btn.secondary {
+  background: transparent;
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(5px);
+}
+
+.hero-btn.secondary:hover {
+  background: white;
+  color: black;
+  border-color: white;
+  transform: translateY(-5px);
+}
+
+/* ===== DUAL LOGO SYSTEM ===== */
+.navbar {
+  display: flex;
+  justify-content: center; /* Keeps Nav Links centered */
+  align-items: center;
+  padding: 10px 60px;
+  min-height: 80px;
+}
+
+.nav-logo {
+  position: absolute;
+  top: 70%;
+  transform: translateY(-50%);
+}
+
+.nav-logo img {
+  height: 80px; /* Adjust this to fit your logo size */
+  width: auto;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.left-logo {
+  left: 30px;
+}
+
+.right-logo {
+  right: 30px;
+}
+
+.nav-logo img:hover {
+  transform: scale(1.1);
+}
+
+/* Mobile Fix: Scale logos down so they don't hit the links */
+@media (max-width: 768px) {
+  .nav-logo img {
+    height: 40px;
+  }
+  .navbar {
+    padding: 10px 15px;
+  }
+  .left-logo { left: 10px; }
+  .right-logo { right: 10px; }
+}
+
+/* ===== CATEGORIZED GALLERY ===== */
+.gallery-filters {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    background: transparent;
+    color: #888;
+    border: 1px solid #333;
+    padding: 10px 25px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.8rem;
+}
+
+.filter-btn:hover {
+    color: #fff;
+    border-color: #ff4d4d;
+}
+
+.filter-btn.active {
+    background: #ff4d4d;
+    color: #fff;
+    border-color: #ff4d4d;
+    box-shadow: 0 5px 15px rgba(255, 77, 77, 0.3);
+}
+
+/* Ensure smooth transitions for filtered items */
+.gallery-item {
+    transition: all 0.5s ease;
+}
+
+.gallery-item.hide {
+    display: none !important;
+}
+
+/* ===== ALBUM GALLERY STYLE ===== */
+.album-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.album-card {
+    cursor: pointer;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.album-cover {
+    width: 100%;
+    aspect-ratio: 1/1;
+    border-radius: 15px;
+    overflow: hidden;
+    background: #222;
+    border: 2px solid #333;
+    margin-bottom: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.album-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: 0.5s ease;
+}
+
+.album-card:hover .album-cover img { transform: scale(1.1); }
+.album-card:hover h3 { color: #ff4d4d; }
+
+.album-card h3 {
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+/* Transitions */
+.photo-view-hidden { display: none; }
+.photo-view-active { display: block; animation: fadeIn 0.5s ease; }
+
+.back-btn {
+    background: transparent;
+    border: 1px solid #ff4d4d;
+    color: #ff4d4d;
+    padding: 10px 20px; 
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 30px;
+}
+
+.back-btn:hover { background: #ff4d4d; color: white; }
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.gradient-subtext {
+    display: block;
+    font-family: 'Inter', sans-serif; /* Cleaner for small bold text */
+    font-size: 0.5em; /* Made it slightly larger */
+    font-weight: 900 !important; /* Force maximum thickness */
+    text-transform: uppercase;
+    letter-spacing: 4px; /* Tighter spacing makes it feel "chunkier" */
+    margin-top: 12px;
+
+    /* THE BOLDNESS BOOSTER */
+    -webkit-text-stroke: 1.5px transparent; /* Adds thickness without losing the gradient */
+    
+    /* GRADIENT ENGINE */
+   background:
+
+linear-gradient(
+
+90deg,
+
+#38BDF8,
+
+#7C3AED,
+
+#EC4899,
+
+#FBBF24
+
+);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    
+    /* VISIBILITY BOOSTERS */
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.9)); /* Deep shadow to separate from background */
+    animation: shine 3s linear infinite;
+}
+
+/* Container to keep text and wave aligned */
+.subtext-container {
+    display: inline-block;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+/* THE SOUNDWAVE UNDERLINE */
+/* THE SOUNDWAVE UNDERLINE - MODIFIED */
+.music-wave {
+    position: absolute;
+    bottom: 0;
+    left: 10%;
+    width: 80%;
+    height: 3px;
+    /* Dotted background removed - now transparent */
+    background: transparent; 
+}
+
+/* The "Rhythm" pulse effect - KEPT */
+.music-wave::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    /* This creates the moving light beam */
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent);
+    animation: wave-flow 2s infinite linear;
+}
+
+@keyframes wave-flow {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+/* The wiggle effect is kept to give the pulse a "vibrating string" feel */
+.music-wave {
+    animation: string-vibrate 0.1s infinite alternate;
+}
+
+@keyframes string-vibrate {
+    from { transform: translateY(0); }
+    to { transform: translateY(1px); }
+}
+
+/* INSTAGRAM-STYLE BLURRED PILL FOR SUBTEXT */
+.subtext-container {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 8px 25px;
+    background: rgba(0, 0, 0, 0.4); /* Minimal transparency black */
+    backdrop-filter: blur(8px); /* The "frosted" effect */
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 50px; /* Rounded pill shape */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Subtle edge highlight */
+}
+
+/* FOR THE CENTER LOGO IN NAVBAR */
+.nav-logo-center {
+    padding: 10px 20px;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 1. DROPDOWN CONTAINER */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* 2. THE "MORE" BUTTON */
+.dropbtn {
+    background: none;
+    border: none;
+    color: white;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    font-weight: 400;
+    cursor: pointer;
+    transition: color 0.3s;
+    padding: 0;
+    font-family: inherit;
+}
+
+.dropdown:hover .dropbtn {
+    color: #ff4d4d;
+}
+
+/* 3. THE GLASS DROPDOWN BOX */
+.dropdown-content {
+    display: none; /* Hidden by default */
+    position: absolute;
+    right: 0; /* Aligns to the right edge of the "More" button */
+    top: 100%;
+    margin-top: 15px;
+    min-width: 180px;
+    
+    /* THE GLASS EFFECT */
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    overflow: hidden;
+    z-index: 1001;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    
+    /* Animation */
+    transform-origin: top right;
+    animation: dropdownFade 0.3s ease forwards;
+}
+
+/* 4. DROPDOWN LINKS */
+.dropdown-content a {
+    color: white;
+    padding: 12px 20px;
+    text-decoration: none;
+    display: block;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    transition: background 0.3s, padding-left 0.3s;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.dropdown-content a:last-child { border-bottom: none; }
+
+.dropdown-content a:hover {
+    background: rgba(255, 77, 77, 0.2);
+    padding-left: 25px; /* Subtle "slide" effect on hover */
+    color: #ff4d4d;
+}
+
+/* 5. SHOW ON HOVER */
+/* ADD THIS INSTEAD */
+.dropdown-content.show {
+    display: block;
+    animation: dropdownFade 0.3s ease forwards;
+}
+
+@keyframes dropdownFade {
+    from { opacity: 0; transform: translateY(-10px) scale(0.95); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Ensure the dropdown is hidden by default but visible when 'show' is added */
+.dropdown-content {
+    display: none; 
+    position: absolute;
+    right: 0;
+    top: 100%;
+    margin-top: 20px;
+    min-width: 180px;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    z-index: 1001;
+}
+
+/* THE KEY CLASS: This makes the menu appear */
+.dropdown-content.show {
+    display: block !important;
+    animation: dropdownFade 0.3s ease forwards;
+}
+
+@keyframes dropdownFade {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+#extraAlbums {
+    display: none; /* Hidden by default */
+    grid-column: 1 / -1; /* Ensures it spans the full grid width */
+    display: grid;
+    grid-template-columns: inherit;
+    gap: inherit;
+}
+
+#extraAlbums.show {
+    display: grid !important;
+    animation: fadeIn 0.5s ease;
+}
+
+/* Ensure it is strictly hidden first */
+.hidden-albums {
+    display: none !important; 
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+/* When active, show it */
+.hidden-albums.show {
+    display: grid !important;
+    animation: fadeInUp 0.5s ease forwards;
+}
+
+/* BIG LOAD MORE BUTTON */
+#loadMoreBtn {
+    padding: 15px 40px; /* Bigger padding */
+    font-size: 1.1rem;   /* Larger text */
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 50px; /* Rounded pill shape */
+    background: linear-gradient(to right, #ff824d, #f71515); /* Match your theme color */
+    color: white;
+    border: none;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+#loadMoreBtn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    background: #ff824d, #f71515;
+}
+
+@media (max-width: 992px) {
+    .hidden-albums { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+    .hidden-albums { grid-template-columns: repeat(1, 1fr); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.contact-section {
+    padding: 80px 5%;
+   background:#F8FAFC;
+}
+
+.contact-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 30px;
+    max-width: 1200px;
+    margin: 40px auto 0;
+}
+
+.contact-column {
+    flex: 1; /* Gives each column equal width */
+    background: white;
+    padding: 25px;
+    border-radius:24px;
+    box-shadow:
+
+0 25px 45px rgba(0,0,0,.12);
+    height: 400px; /* Uniform height for alignment */
+}
+
+/* Specific styling for the Map Column */
+.map-box {
+    flex: 1.5; /* Makes the map slightly wider than the side columns */
+    padding: 10px; /* Tight padding for the map */
+    overflow: hidden;
+}
+
+.map-box iframe {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+}
+
+/* Styling the Nav Links */
+.nav-shortcuts h3, .contact-details h3 {
+    color: #004d40;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #004d40;
+    display: inline-block;
+}
+
+.nav-shortcuts ul {
+    list-style: none;
+}
+
+.nav-shortcuts ul li {
+    margin-bottom: 12px;
+}
+
+.nav-shortcuts ul li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.nav-shortcuts ul li a:hover {
+    color: #004d40;
+    padding-left: 8px;
+}
+
+.contact-details p {
+    margin-bottom: 15px;
+    line-height: 1.6;
+    color: #444;
+}
+
+/* Responsive: Stack them on smaller screens */
+@media (max-width: 992px) {
+    .contact-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .contact-column {
+        width: 100%;
+        height: auto;
+    }
+    
+    .map-box {
+        order: -1; /* Puts the map on top on mobile */
+        height: 300px;
+    }
+}
+
+.social-links {
+    margin-top: 25px;
+    padding-top: 15px;
+    border-top: 1px dashed #ddd;
+}
+
+.social-links h4 {
+    font-size: 1rem;
+    margin-bottom: 15px;
+    color: #555;
+}
+
+.social-icons {
+    display: flex;
+    gap: 15px;
+}
+
+.social-btn {
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* Instagram Gradient Background */
+.social-btn.instagram {
+    background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+}
+
+.social-btn.facebook { background: #1877F2; }
+.social-btn.linkedin { background: #0077B5; }
+
+.social-btn:hover {
+    transform: translateY(-5px) scale(1.1);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+}
+
+.modal-overlay {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 10000;
+    align-items: center;
+    justify-content: center;
+}
+
+.contact-modal-content {
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 450px;
+    position: relative;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    animation: slideUp 0.4s ease;
+}
+
+.form-group { margin-bottom: 20px; }
+
+.form-group input, .form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-family: inherit;
+    outline: none;
+}
+
+.form-group input:focus, .form-group textarea:focus {
+    border-color: #004d40;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 15px;
+    background: #004d40;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.submit-btn:hover { background: #00695c; }
+
+.close-modal {
+    position: absolute;
+    top: 15px; right: 20px;
+    font-size: 28px;
+    cursor: pointer;
+    color: #888;
+}
+
+@keyframes slideUp {
+    from { transform: translateY(50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* Modern Typography & Spacing */
+.sub-page-content {
+    padding-top: 100px; /* Prevents content hiding under navbar */
+    font-family: 'Poppins', sans-serif;
+    background-color: #000000; /* Prevents the "black" look below the curve */
+}
+
+.page-banner {
+    background: linear-gradient(135deg, #c06a38 0%, #f35f1f 5%, #8a2c2c 45%, #ff1515 60%, #ec6755 90%);
+    padding: 120px 5% 80px;
+    text-align: center;
+    color: #ffff(0, 0, 0);
+    clip-path: ellipse(150% 100% at 50% 0%); /* Sexy curved bottom */
+}
+
+.page-banner h1 {
+    font-size: 3.5rem;
+    letter-spacing: -1px;
+    margin-bottom: 15px;
+}
+
+.vision-large-card {
+    background: #ffffff !important;
+    border-radius: 30px !important;
+    padding: 80px 40px 40px !important; /* Increased top padding */
+    max-width: 800px !important;
+    margin: 60px auto !important; /* Spacing between cards */
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    position: relative !important; /* Required for the icon to 'stick' to it */
+    z-index: 10 !important;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1) !important;
+    filter: none !important; /* Kills the 'fog' blur from earlier */
+}
+
+/* ADDED: Targeting the text inside your cards */
+.vision-large-card h2 {
+    color: #004d40; /* MGM Dark Green */
+    margin-bottom: 15px;
+}
+
+.vision-large-card p, .vision-large-card li {
+    color: #333333; /* Dark Grey (Visible on white background) */
+    line-height: 1.6;
+}
+
+/* 1. Fix the Giant Circles */
+/* 1. Reset the Giant Circles to normal size */
+.icon-circle {
+    position: absolute !important;
+    top: -40px !important; /* Halfway out of the card */
+    left: 50% !important;
+    transform: translateX(-50%) !important; /* Perfect horizontal centering */
+    
+    background: #ffffff !important;
+    width: 80px !important;
+    height: 80px !important;
+    border-radius: 50% !important;
+    border: 4px solid #f3b31f !important; /* Matches banner */
+    
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    
+    /* NUCLEAR OPTION FOR PULSING */
+    animation: none !important; 
+    transition: none !important;
+    
+    color: #004d40 !important;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+    z-index: 20 !important;
+}
+
+/* Kills any wiggling of the actual FontAwesome eye/target icon */
+.icon-circle i {
+    animation: none !important;
+    transform: none !important;
+    font-size: 2rem !important;
+}
+
+/* Fix for the Navbar stacking */
+.navbar {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 1rem 5% !important;
+    
+    /* Forces this specific dark green color */
+    background-color: #000000 !important; 
+    background: #000000 !important; /* Some browsers prefer 'background' over 'background-color' */
+    
+    position: absolute !important; /* Makes it float above the content */
+    top: 0 !important;
+    width: 100% !important;
+    z-index: 9999 !important; /* Higher z-index to stay on top of everything */
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+    align-items: center;
+}
+  
+.nav-links li a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+/* Ensure the container is ready for a giant background */
+.vision-detail-section {
+    padding: 100px 10%;
+    position: relative; /* REQUIRED */
+    background-color: #f8f9fa4c; 
+    min-height: 100vh;
+    overflow: hidden; /* This hides the parts of the logo that go off-screen */
+}
+
+/* THE GIANT LOGO LOGIC */
+/* 1. THE PARENT CONTAINER - This must be tall for the logo to show */
+.vision-detail-section {
+    padding: 100px 10%;
+    position: relative; /* This is the "anchor" for the logo */
+    background-color: #f8f9fa00; /* Prevents the black background look */
+    min-height: 100vh; /* Forces the section to be at least full screen height */
+    width: 100%;
+    overflow: hidden; /* Hides the parts of the giant logo that go off-page */
+}
+
+/* 2. THE GIANT LOGO */
+.vision-detail-section::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+    /* We use viewport units (vw/vh) to guarantee it's HUGE regardless of card size */
+    width: 100vw; 
+    height: 100vh; 
+    
+    background-image: url('images/mgm-rhythm-logo.png'); 
+    background-repeat: no-repeat;
+    background-position: center;
+    
+    /* CHANGE: 'cover' makes it fill the whole area, 'contain' keeps it small */
+    background-size: cover; 
+    
+    /* Faded original colors - adjust 0.1 to 0.2 for more/less color */
+    opacity: 0.12; 
+    
+    z-index: 1; /* Lowest level */
+    pointer-events: none;
+}
+
+/* 3. THE CARDS */
+.vision-container {
+    position: relative;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    gap: 80px; /* Increased gap for breathing room */
+    max-width: 900px;
+    margin: 40px auto 0; /* Changed from -100px to 40px to stop overlapping the banner title */
+}
+
+.faculty-section {
+    background-color: #001a14;
+    padding: 80px 0;
+    overflow: hidden;
+}
+
+.faculty-marquee {
+    width: 100%;
+    overflow: hidden;
+    padding: 60px 0;
+    position: relative;
+    display: flex;
+}
+
+.faculty-track {
+    display: flex;
+    /* This ensures the track is long enough for all sets */
+    width: max-content; 
+    gap: 30px;
+    /* linear ensures no "speeding up" or "slowing down" at the loop point */
+    animation: seamlessLoop 60s linear infinite; 
+}
+
+/* HOVER ELEVATION - Keeps moving while lifting */
+.faculty-card {
+    display: flex;
+    width: 450px;
+    height: 280px; /* Slightly increased height for better breathing room */
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    overflow: hidden; /* This keeps the image from leaking out */
+    flex-shrink: 0;
+}
+
+.faculty-card:hover {
+    transform: translateY(-20px) scale(1.02); /* Elevates and slightly grows */
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.9); /* Heavy black shadow */
+    border-color: #ff4d4d;
+    z-index: 10; /* Ensures it stays above the other moving cards */
+}
+
+/* ... after .faculty-card:hover ... */
+
+.faculty-img {
+    height: 100%;
+    width: 45%;
+    background-size: cover;
+    background-position: top center; /* This ensures the face is always visible */
+    border-right: 1px solid rgba(255,255,255,0.1);
+    background-repeat: no-repeat;
+}
+
+.faculty-info {
+    width: 55%;
+    padding: 20px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+
+    text-align: left;
+    /* THIS IS THE FIX */
+    overflow-y: auto; /* Adds a scrollbar if text is too long */
+    max-height: 100%; 
+}
+
+.faculty-info h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    margin-bottom: 2px; /* Pulls the subtitle closer to the name */
+    color: #ffffff;
+    font-weight: 700; /* Makes the name thick and noticeable */
+    letter-spacing: 1px;
+}
+
+.faculty-info span {
+    font-size: 0.75rem;
+    color: #ff4d4d; /* Uses your signature red to separate name from quote */
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 15px; /* Creates a gap before the saying starts */
+    display: block;
+    font-weight: 600;
+}
+
+.faculty-info p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    font-style: italic; /* Makes the saying look like a quote */
+    color: #bbb; /* Slightly grayer/dimmer than the name so the name pops */
+    position: relative;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1); /* Subtle line to separate identity from words */
+}
+
+/* SLEEK CUSTOM SCROLLBAR FOR THE CARDS */
+.faculty-info::-webkit-scrollbar {
+    width: 4px;
+}
+
+.faculty-info::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.faculty-info::-webkit-scrollbar-thumb {
+    background: #ff4d4d; /* Your signature red */
+    border-radius: 10px;
+}
+
+/* ... before the @keyframes seamlessLoop ... */
+
+/* THE SEAMLESS KEYFRAMES */
+@keyframes seamlessLoop {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        /* Since we have 3 sets, moving -33.33% puts Set 2 exactly where Set 1 was */
+        transform: translateX(calc(-33.333% - 10px)); 
+    }
+}
+
+.faculty-header {
+    text-align: center;
+    margin-bottom: 60px;
+    padding: 0 20px;
+}
+
+.director-title {
+    font-family: 'Pinyon Script', cursive; /* The curvy font */
+    font-size: 3.5rem; /* Larger for elegance */
+    color: #fff;
+    font-weight: 400;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Optional: A stylish underline to match the aesthetic */
+.title-underline {
+    width: 150px;
+    height: 2px;
+    background: linear-gradient(to right, transparent, #ff4d4d, transparent);
+    margin: 0 auto;
+}
+
+/* Mobile Fix for large script fonts */
+@media (max-width: 768px) {
+    .director-title {
+        font-size: 2.2rem;
+    }
+}
+
+/* Vinyl Section Styling */
+.vinyl-section {
+    background: #0a0a0a;
+    padding: 120px 0;
+    overflow: hidden;
+}
+
+.vinyl-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 80px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* The Record Player Mechanics */
+.record-player {
+    position: relative;
+    width: 450px;
+    height: 450px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* MODIFIED: The Heavy Golden Aura */
+.record-player::before {
+    content: '';
+    position: absolute;
+    width: 500px; /* Larger than the record */
+    height: 500px;
+    /* Richer gold color with more spread */
+    background: radial-gradient(circle, rgba(255, 215, 0, 0.4) 0%, rgba(218, 165, 32, 0.1) 50%, transparent 75%);
+    border-radius: 50%;
+    z-index: 0;
+    filter: blur(45px); /* Much heavier blur for a soft 'bloom' effect */
+    animation: pulseGlow 4s ease-in-out infinite;
+}
+
+.record-spinner {
+    width: 400px;
+    height: 400px;
+    animation: rotateInfinite 8s linear infinite;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+}
+
+/* MODIFIED: Vinyl with massive outer bloom shadow */
+.vinyl-record {
+    width: 100%;
+    height: 100%;
+    background: #111;
+    border-radius: 50%;
+    position: relative;
+    /* Added deep layered shadows to make the light bleed out further */
+    box-shadow: 
+        0 0 50px rgba(255, 215, 0, 0.3), 
+        0 0 100px rgba(218, 165, 32, 0.2),
+        inset 0 0 20px rgba(255, 215, 0, 0.2); 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Sparkle Particles */
+.record-player::after {
+    content: '✨';
+    position: absolute;
+    font-size: 10px;
+    color: rgba(255, 215, 0, 0.6);
+    text-shadow: 0 0 5px #ffd700;
+    animation: sparkles 3s linear infinite;
+    pointer-events: none;
+    z-index: 3;
+}
+
+/* MODIFIED: Stronger Pulse Animation */
+@keyframes pulseGlow {
+    0%, 100% { transform: scale(0.9); opacity: 0.6; }
+    50% { transform: scale(1.2); opacity: 1; } /* Aura physically grows and shrinks */
+}
+
+@keyframes sparkles {
+    0% { transform: translate(-150px, 100px) scale(0); opacity: 0; }
+    50% { opacity: 1; }
+    100% { transform: translate(150px, -100px) scale(1.5); opacity: 0; }
+}
+
+.vinyl-grooves {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: repeating-radial-gradient(
+        circle,
+        rgba(255,255,255,0.03) 0px,
+        rgba(255,255,255,0.03) 1px,
+        transparent 2px,
+        transparent 4px
+    );
+}
+
+.student-label {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    border: 6px solid #1a1a1a;
+    z-index: 5;
+    transition: background-image 0.5s;
+}
+
+/* Tonearm (The Needle) */
+.tonearm {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    width: 150px;
+    height: 15px;
+    background: linear-gradient(to right, #444, #222);
+    transform-origin: top right;
+    transform: rotate(25deg);
+    border-radius: 10px;
+    transition: transform 0.6s ease;
+    z-index: 10;
+}
+
+/* Content Styling */
+.vinyl-info { flex: 1; max-width: 500px; }
+.testimonial-box { margin-top: 30px; position: relative; }
+.gold-quote { color: #ff4d4d; font-size: 2rem; margin-bottom: 20px; }
+#activeQuote { font-size: 1.4rem; line-height: 1.6; color: #ddd; font-style: italic; transition: opacity 0.4s; }
+.student-meta { margin-top: 25px; border-left: 3px solid #ff4d4d; padding-left: 15px; }
+
+/* REAMED ANIMATION */
+@keyframes rotateInfinite {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Control Button */
+.control-btn {
+    background: transparent;
+    border: 1px solid #ff4d4d;
+    color: #fff;
+    padding: 12px 30px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 40px;
+    transition: all 0.3s;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.control-btn:hover { background: #ff4d4d; box-shadow: 0 0 20px rgba(255, 77, 77, 0.4); }
+
+.sparkle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: gold;
+    border-radius: 50%;
+    filter: blur(1px);
+    z-index: 3; /* Moved above aura */
+    opacity: 0;
+}
+
+.s1 { top: 20%; left: 20%; animation: blink 2s infinite 0.5s; }
+.s2 { bottom: 30%; right: 25%; animation: blink 3s infinite 1s; }
+.s3 { top: 50%; left: 10%; animation: blink 2.5s infinite 1.5s; }
+
+@keyframes blink {
+    0%, 100% { opacity: 0; transform: scale(0); }
+    50% { opacity: 0.9; transform: scale(1.5); box-shadow: 0 0 15px gold; }
+}
+
+/* Modal Overlay */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s ease;
+}
+
+/* Modal Content Box */
+.modal-content {
+    background: linear-gradient(145deg, #1a1a1a, #0a0a0a);
+    padding: 50px 40px;
+    border-radius: 20px;
+    text-align: center;
+    max-width: 450px;
+    width: 90%;
+    border: 1px solid rgba(255, 215, 0, 0.3); /* Subtle gold border */
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(255, 215, 0, 0.1);
+    transform: scale(0.8);
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Show State */
+.modal-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+.modal-overlay.show .modal-content {
+    transform: scale(1);
+}
+
+/* Success Icon Animation */
+/* 1. THE RED CIRCLE (Locked & Still) */
+.success-icon {
+    position: relative !important;
+    width: 80px !important;
+    height: 80px !important;
+    background: #ff4d4d !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 auto 20px !important;
+    font-size: 40px !important;
+    color: white !important;
+    box-shadow: 0 0 20px rgba(255, 77, 77, 0.5) !important;
+    
+    /* This kills any inherited pulsing forever */
+    animation: none !important; 
+}
+
+/* 2. THE CHECKMARK INSIDE */
+.success-icon i {
+    animation: none !important;
+    transform: none !important;
+}
+
+.modal-content h2 {
+    color: #fff;
+    margin-bottom: 15px;
+    font-size: 1.8rem;
+}
+
+.modal-content p {
+    color: #bbb;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+.close-modal-btn {
+    background: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 12px 40px;
+    border-radius: 30px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.close-modal-btn:hover {
+    background: #e63939;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(255, 77, 77, 0.3);
+}  
+/* ===== THE MASTER MOBILE KEY ===== */
+@media (max-width: 768px) {
+    /* 1. Force every flex container to stack vertically */
+    .vinyl-container, 
+    .inauguration-container, /* Add your inauguration section class here */
+    .section-wrapper, 
+    .flex-row { 
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: center !important;
+        gap: 30px !important;
+    }
+
+    /* 2. Global Section Padding Adjustment */
+    section, .section {
+        padding: 60px 15px !important;
+    }
+
+    /* 3. VINYL SPECIFIC: Scale down the record player */
+    .record-player {
+        width: 280px !important; /* Smaller for mobile */
+        height: 280px !important;
+        margin: 0 auto;
+    }
+
+    .record-spinner, .vinyl-record {
+        width: 100% !important;
+        height: 100% !important;
+    }
+
+    .record-player::before {
+        width: 300px !important;
+        height: 300px !important;
+    }
+
+    /* 4. INAUGURATION IMAGE SPECIFIC: Ensure photos take full width */
+    .inauguration-image, .faculty-img, .student-label {
+        max-width: 100% !important;
+        height: auto !important;
+    }
+
+    /* 5. Typography: Prevent long titles from breaking */
+    h2 {
+        font-size: 1.8rem !important;
+    }
+    
+    p, .testimonial-box p {
+        font-size: 1rem !important;
+        width: 100% !important;
+    }
+
+    /* 6. Fix for the text squashing in your second photo */
+    .inauguration-content {
+        order: 2; /* Moves text below the photo */
+        padding: 0 10px;
+    }
+}
+
+/* 1. Force the container to stop trapping the cards */
+.card-container, .section, #courses {
+    transform: none !important;
+    perspective: none !important;
+    z-index: auto !important;
+}
+
+/* 2. The Expanded Card "Nuclear" Fix */
+.card.expanded {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) scale(1.1) !important;
+    
+    /* This must be higher than EVERYTHING else on the page */
+    z-index: 100000 !important; 
+    
+    /* Removes the blur from the card itself */
+    filter: none !important;
+    -webkit-filter: none !important;
+    opacity: 1 !important;
+    
+    /* Ensure background is solid so you can see text */
+    background-color: #161616 !important;
+    visibility: visible !important;
+}
+
+/* 3. Ensure the blur is strictly BEHIND the card */
+.modal-overlay.active {
+    z-index: 99999 !important;
+    display: block !important;
+}
+
+/* STOP THE PARENTS FROM SPINNING */
+.record-spinner, 
+.vinyl-record {
+    animation: none !important;
+    transform: none !important;
+}
+
+/* KEEP THE LABEL CENTERED AND STILL */
+#recordLabel {
+    /* Keeps your existing size and centering */
+    width: 65% !important; 
+    height: 65% !important;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    /* This MUST stay to keep it centered, but we ensure no rotation */
+    transform: translate(-50%, -50%) rotate(0deg) !important;
+    
+    /* Disables any inherited animations */
+    animation: none !important;
+}
+
+/* Fixes the list alignment inside the cards */
+.vision-list, .mission-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: left; /* Keeps text readable while card is centered */
+}
+
+.vision-list li, .mission-list li {
+    margin-bottom: 15px;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+}
+
+.vision-list li i, .mission-list li i {
+    color: #004d40;
+    margin-top: 5px; /* Aligns checkmark with first line of text */
+}
+
+.card-text-content {
+    width: 100%;
+}
+
+#alumni-3d-section {
+    padding: 100px 0;
+    background: #000;
+    overflow: hidden;
+    text-align: center;
+}
+
+.gallery-3d-container {
+    position: relative;
+    width: 100%;
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    perspective: 1500px;
+    margin-top: 50px;
+}
+
+.gallery-3d-track {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+}
+
+/* Container for the flip effect */
+.alumni-card {
+    position: absolute !important;
+    top: 50%;
+    left: 50%;
+    width: 280px;
+    height: 380px;
+    transform: translate(-50%, -50%);
+    perspective: 1000px; /* Gives the flip depth */
+    display: none;
+    opacity: 0;
+}
+
+.alumni-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-style: preserve-3d;
+    cursor: pointer;
+}
+
+/* Hover logic: Only flip the ACTIVE card */
+.g-card-active:hover .alumni-card-inner {
+    transform: rotateY(180deg);
+}
+
+.alumni-card-front, .alumni-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden; /* Important! Hides the back side when looking at front */
+    border-radius: 15px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    overflow: hidden;
+}
+
+/* Front Side Styling */
+.alumni-card-front img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Back Side Styling (The Message) */
+.alumni-card-back {
+    background: linear-gradient(135deg, #1a1a1a 0%, #333 100%);
+    color: white;
+    transform: rotateY(180deg); /* Starts rotated so it faces away */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    border: 2px solid #ff4d4d;
+    text-align: center;
+}
+
+.back-content i {
+    color: #ff4d4d;
+    font-size: 2rem;
+    margin-bottom: 15px;
+    display: block;
+}
+
+.back-content p {
+    font-style: italic;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.back-content span {
+    font-weight: bold;
+    color: #ff4d4d;
+    display: block;
+}
+
+/* 3D States */
+.g-card-active {
+    display: block !important;
+    opacity: 1 !important;
+    z-index: 10;
+    transform: translate(-50%, -50%) scale(1.1);
+}
+
+.g-card-prev {
+    display: block !important;
+    opacity: 0.4 !important;
+    z-index: 5;
+    transform: translate(-140%, -50%) scale(0.8) rotateY(35deg);
+}
+
+.g-card-next {
+    display: block !important;
+    opacity: 0.4 !important;
+    z-index: 5;
+    transform: translate(40%, -50%) scale(0.8) rotateY(-35deg);
+}
+
+/* Navigation */
+.g-nav-btn {
+    position: absolute;
+    z-index: 100;
+    background: rgba(255, 77, 77, 0.2);
+    border: 1px solid #ff4d4d;
+    color: white;
+    font-size: 24px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.g-nav-btn:hover { background: #ff4d4d; }
+.g-nav-btn.prev { left: 5%; }
+.g-nav-btn.next { right: 5%; }
+
+.gallery-3d-caption {
+    margin-top: 30px;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 300;
+    letter-spacing: 1px;
+}
+
+/* === FULLY SYNCHRONIZED ALUMNI SECTION === */
+
+.our-alumni-section {
+    padding: 100px 0;
+    background-color: #000;
+    overflow: hidden;
+}
+
+/* 1. Centered Header & Gradient Underline */
+.our-alumni-header {
+    text-align: center;
+    width: 100%;
+    margin-bottom: 60px;
+}
+
+.our-alumni-header .title-underline {
+    width: 180px;
+    height: 2px;
+    margin: 15px auto;
+    /* Red glow gradient matching faculty screenshot */
+    background: linear-gradient(90deg, transparent, #ff4d4d, transparent);
+    box-shadow: 0 0 12px rgba(255, 77, 77, 0.4);
+}
+
+.our-alumni-marquee {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    padding: 30px 0;
+}
+
+.our-alumni-track {
+    display: flex;
+    width: max-content;
+    /* Faster/Slower scroll adjustment: Change 40s */
+    animation: scrollAlumni 40s linear infinite;
+}
+
+/* No pause on hover - animation-play-state: paused is REMOVED */
+
+/* === FINAL FACULTY-MATCH ALUMNI CARDS === */
+
+.our-alumni-card {
+    background: #0a1a15; /* Dark Faculty Green */
+    border-radius: 15px;
+    margin: 0 20px;
+    display: flex;
+    align-items: stretch; /* This stretches the image and text to the same height */
+    gap: 0; /* Removed gap so image touches the edge */
+    width: 550px; /* Increased width */
+    height: 280px; /* Increased height */
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.4s ease;
+    flex-shrink: 0;
+    overflow: hidden; /* This crops the image to the card's rounded corners */
+    padding: 0; /* Removed padding so image hits the corners */
+}
+
+.our-alumni-card:hover {
+    transform: translateY(-10px);
+    border-color: #ff4d4d;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+/* THE IMAGE: Now covers the left side completely */
+.our-alumni-img {
+    width: 200px; /* Wider image area */
+    height: 100%; /* Full height of the card */
+    flex-shrink: 0;
+    background-size: cover;
+    background-position: center;
+    border-radius: 0; /* Removed to let it fit the card corner perfectly */
+}
+
+/* THE INFO: Added padding back here so text isn't touching the image */
+.our-alumni-info {
+    padding: 25px; 
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centers text vertically next to image */
+    overflow: hidden;
+}
+
+.our-alumni-info i {
+    color: #ff4d4d;
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+}
+
+.our-alumni-info h3 {
+    color: #fff;
+    font-size: 1.3rem;
+    margin: 0;
+}
+
+.alumni-batch {
+    color: #ff4d4d;
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.our-alumni-info p {
+    color: #ccc;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    font-style: italic;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Animation remains the same */
+@keyframes scrollAlumni {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+/* ============================= */
+/* =============================
+   INTRO SCREEN
+============================= */
+
+#intro {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+    overflow: hidden;
+}
+
+/* golden atmosphere */
+
+.intro-bg {
+    position: absolute;
+    width: 180vmax;
+    height: 180vmax;
+
+    background:
+    radial-gradient(
+        circle,
+        rgba(255,190,70,.18) 0%,
+        transparent 65%
+    );
+
+    transform: scale(.8);
+}
+
+
+/* logo container */
+
+/* logo */
+
+#introLogo {
+
+    width:340px;
+    height:340px;
+
+    display:block;
+
+    position:relative;
+
+    z-index:2;
+
+}
+
+
+#introLogo svg {
+
+    overflow:visible;
+
+}
+
+.logo-wrapper {
+
+    position:absolute;
+
+    top:50%;
+    left:50%;
+
+    transform:translate(-50%,-50%);
+
+    z-index:10;
+
+}
+
+/* glow */
+
+.glow {
+
+    position:absolute;
+
+    width:320px;
+
+    height:320px;
+
+    left:50%;
+    top:50%;
+
+    transform:
+    translate(-50%,-50%);
+
+    border-radius:50%;
+
+    background:
+    radial-gradient(
+        circle,
+        rgba(255,190,60,.20),
+        transparent 70%
+    );
+
+    opacity:0;
+
+    filter:blur(45px);
+
+}
+
+
+/* prevent scrolling */
+
+body.intro-active {
+
+    overflow:hidden;
+
+}
+
+/* SVG drawing light trail */
+
+/* REMOVE OLD CARD EXPANSION BEHAVIOR */
+
+.card.expanded {
+
+    width:280px !important;
+    padding:0 !important;
+
+    position:relative !important;
+
+    top:auto !important;
+    left:auto !important;
+
+    transform:none !important;
+
+    background-image:none !important;
+
+    border:1px solid #333;
+
+    box-shadow:none;
+
+}
+
+
+.card.expanded .card-img {
+
+    display:block !important;
+
+}
+
+/* ==================================
+   CINEMATIC COURSE BACKDROP
+================================== */
+
+/* ================================
+   COURSE BACKDROP IMAGE
+================================ */
+
+.course-backdrop {
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:9998;
+
+    opacity:0;
+
+    visibility:hidden;
+
+    overflow:hidden;
+}
+
+
+.course-backdrop.active {
+
+    opacity: 1;
+
+    visibility: visible;
+
+}
+
+
+.backdrop-image {
+
+    position:absolute;
+
+    width:1000px;
+    height:1000px;
+
+    left:50%;
+    top:50%;
+
+    transform:translate(-50%,-50%);
+
+
+    background-size:cover;
+    background-position:center;
+
+
+    opacity:1;
+
+
+    filter:blur(0px);
+
+
+    -webkit-mask-image:
+    radial-gradient(
+        ellipse at center,
+        black 0%,
+        black 35%,
+        rgba(0,0,0,0.5) 55%,
+        transparent 75%
+    );
+
+
+    mask-image:
+    radial-gradient(
+        ellipse at center,
+        black 0%,
+        black 35%,
+        rgba(0,0,0,0.5) 55%,
+        transparent 75%
+    );
+
+}
+.course-backdrop {
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+}
+/* FINAL COURSE POPUP POSITION FIX */
+
+.card.expanded {
+
+    position: fixed !important;
+
+    top: 50% !important;
+    left: 50% !important;
+
+    transform: translate(-50%, -50%) scale(1.15) !important;
+
+    width: 350px !important;
+
+    z-index: 10000 !important;
+
+    margin: 0 !important;
+    background-image:none !important;
+
+}
+
+/* FINAL MODAL LAYER ORDER */
+
+.modal-overlay {
+    z-index: 5000;
+}
+
+
+.course-backdrop {
+    z-index: 6000;
+}
+
+
+.card.expanded {
+    z-index: 10000 !important;
+}
+.modal-overlay {
+    pointer-events:none;
+}
+
+
+.modal-overlay.active {
+    pointer-events:auto;
+}
+.card.expanded {
+    pointer-events:auto;
+}
+.course-backdrop {
+    pointer-events:none;
+}
+/* CLICK BEHAVIOUR FIX */
+
+.modal-overlay,
+.course-backdrop {
+    pointer-events:none;
+}
+
+
+.modal-overlay.active,
+.course-backdrop.active {
+    pointer-events:auto;
+}
+
+
+.card.expanded {
+    pointer-events:auto !important;
+}
+.card.expanded {
+    position:fixed !important;
+    z-index:99999 !important;
+}
+
+.modal-overlay.active {
+    background: rgba(0,0,0,0.1) !important;
+}
